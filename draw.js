@@ -35,3 +35,35 @@ function highlightPoint(pointIndex) {
    ellipse(points[pointIndex].vector.x, points[pointIndex].vector.y, 15, 15);
    endShape();
 }
+
+function drawRoutes() {
+    /*
+    Draws both routes. routeA is magenta, routeB is teal
+    */
+
+    // reset background, draw map
+    background(0);
+    drawPointArray(points);
+
+    // routeA
+    stroke(204, 0, 102);
+    beginShape();
+    for(var i = 0; i < routeA.length; i++) {
+        var pointIndex = routeA[i];
+        var pointInstance = points[pointIndex];
+        vertex(pointInstance.vector.x, pointInstance.vector.y);
+        ellipse(pointInstance.vector.x, pointInstance.vector.y, 7, 7);
+    }
+    endShape();
+
+    // routeB
+    stroke(0, 255, 255);
+    beginShape();
+    for(var i = 0; i < routeB.length; i++) {
+        var pointIndex = routeB[i];
+        var pointInstance = points[pointIndex];
+        vertex(pointInstance.vector.x, pointInstance.vector.y);
+        ellipse(pointInstance.vector.x, pointInstance.vector.y, 7, 7);
+    }
+    endShape();
+}

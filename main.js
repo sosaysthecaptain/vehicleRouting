@@ -1,37 +1,29 @@
-//var http = require('http');
+var points = [];  
+var unassignedPoints = [];
+var routeA = [0, 1, 0];      // route points are denoted by index values of points array
+var routeB = [0, 2, 0];
 
-var points = [];
-// var minX = -88.2;
-// var maxX = -87.6;
-// var minY = 41.7;
-// var maxY = 43.05;
+var routeAInsertAfter = 0;      // variable for index of next insertion, routeA
+var routeBInsertAfter = 0;      // variable for index of next insertion, routeA
 
-var minX = 0;       // tend to be around -87, so this is much higher
-var maxX = -100;    // tend to be around -87, so this is much lower
+var minX = 0;         // tend to be around -87, so this is much higher
+var maxX = -100;      // tend to be around -87, so this is much lower
 var minY = 100;       // tend to be around 41, so this is much higher
-var maxY = 0;     // tend to be around 41, so this is much lower
+var maxY = 0;         // tend to be around 41, so this is much lower
 
-var popSize = 500;
-var routePopulation = [];
-var flipMutationRate = 0.5;
-var exchangeMutationRate = 0.9;
-
-var bestDistance = Infinity;
-var bestRoutePairToDate;
-
-var generation = 0;
-var routePairIndex = 0;
 var pointIndex = 0;
 
 var csv;
 
 function preload() {
+
+  // for this to work, script must be running on server
   csv = loadStrings('./testing/coordsTest2.csv');
 }
 
 function setup() {
 
-  processCSV();               // use this only if ditching jQuery option
+  processCSV(); 
   createCanvas(600, 600);
   background(0);
   drawPointArray(points);
@@ -40,45 +32,21 @@ function setup() {
 
 function draw() {
   /*
-  Main loop:
-    - assessFitness()
-      - calculates and sorts current populaton by fitness, finds best individual to date
-    - renderRoutes()
-      - draw the best route to date, as well as the best route of the batch, on the screen
-    - nextGeneration()
-      - culls the present generation to create the next one, more highly representing fitter phenotypes
-      - performs crossover, adding to genetic diversity
-      - introduces random mutations
 
-    All of this is accomplished with the runGeneration() function.
   */
+}
 
-  //background(0);
-  //runGeneration();
-
-  //assessFitness();
-  //renderRoutes();
-  //nextGeneration();
-
-  // TESTING
-
-
-  // after 1000 generations, log results
-  // if (generation == 1000) {
-  //   // log results
-  //   console.log('Route A: ');
-  //   for (var i = 0; i < bestRoutePairToDate.routeAWithDepot.length; i++) {
-  //     console.log('    ' + bestRoutePairToDate.routeAWithDepot[i].pointName);
-  //   }
-  //   console.log('Route B: ');
-  //   for (var i = 0; i < bestRoutePairToDate.routeBWithDepot.length; i++) {
-  //     console.log('    ' + bestRoutePairToDate.routeBWithDepot[i].pointName);
-  //   }
-  // }
+// ********************************
+function buildRoutes() {
+  /*
+  Main function to build best guess routes. Procedure:
+    1) Find furthest point from depot, and furthest point from that. 
+  */
 }
 
 
-
+// *********************************
+// old stuff below here
 
 
 
@@ -98,44 +66,6 @@ function calcDistance(points, order) {
 
 // *********
 
-
-function drawRoutePairLight(routePairInstance) {
-  // just in case
-  //routePairInstance.addDepot();
-
-  // reset background
-  background(0);
-  
-  // draw points in white, will be covered if visited
-  drawPointArray(points);
-
-  strokeWeight(3);
-  //noFill();
-  beginShape();
-
-  // draw route 1
-  stroke(0, 255, 0);
-  beginShape();
-  for(var i = 0; i < routePairInstance.routeAWithDepot.length; i++) {
-    var pointInstance = routePairInstance.routeAWithDepot[i];
-    vertex(pointInstance.vector.x, pointInstance.vector.y);
-    ellipse(pointInstance.vector.x, pointInstance.vector.y, 6, 6);
-  }
-  endShape();
-
-  // draw route 2
-  stroke(0, 0, 255);
-  beginShape();
-  for(var i = 0; i < routePairInstance.routeBWithDepot.length; i++) {
-    var pointInstance = routePairInstance.routeBWithDepot[i];
-    vertex(pointInstance.vector.x, pointInstance.vector.y);
-    ellipse(pointInstance.vector.x, pointInstance.vector.y, 6, 6);
-  }
-  endShape();
-
-  // draw depot
-  drawDepot();
-}
 
 
 function logRoutePairs(routePairInstance) {

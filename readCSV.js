@@ -26,6 +26,11 @@ function processCSV() {
     for (var i = 0; i < points.length; i++) {
         points[i].setRelXY();
     }
+
+    // load all point indices into unassignedPoints
+    for (var i = 0; i < points.length; i++) {
+      unassignedPoints.push(points[i].index);
+    }
     
 }
 

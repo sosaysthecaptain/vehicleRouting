@@ -53,6 +53,26 @@ function addSeedPoints() {
 
 }
 
+function insertNearestPoint(route) {
+    /*
+    Given a route, inserts the nearest point into the position which produces the shortest possible route.
+
+    Makes use of findPointNearestRoute() and getRouteLength()
+    */
+
+    // find the nearest point
+    let nearestPointIndex = findPointNearestRoute(route);
+
+    var bestCandidateRouteLength = Infinity;
+    var bestCandidateRoute = [];
+    // for position in route, construct a candidate route
+    for (var i = 0; i < route.length; i++) {
+        var candidateArray = route.slice();
+        insertPointIntoRoute(nearestPointIndex, route);
+        console.log(candidateArray);
+    }
+}
+
 function findPointNearestRoute(route) {
     /*
     Returns index of unassigned point nearest one of the points on the given route.
@@ -62,14 +82,16 @@ function findPointNearestRoute(route) {
 
     // for point in route that isn't the depot
     for (var i = 1; i < route.length - 1; i++) {
-        routePointIndex = i;
+        routePointIndex = route[i];
 
         // iterate through unassignedPoints, find the closest
         for (var j = 0; j < unassignedPoints.length; j++) {
             let candidatePointIndex = unassignedPoints[j];
-            //console.log('checking points ' + routePointIndex + ' and ' + candidatePointIndex);
             let distance = getDistanceBetweenPoints(routePointIndex, candidatePointIndex);
+            console.log('checking points ' + routePointIndex + ' and ' + candidatePointIndex);
+            console.log('  distance: ' + distance);
             if (distance < bestDistance) {
+                console.log('  BEST DISTANCE');
                 bestDistance = distance;
                 bestPointIndex = candidatePointIndex;
             }
@@ -150,4 +172,18 @@ function getDistanceBetweenPoints(pointAIndex, pointBIndex) {
    let pointB = points[pointBIndex];
    let distance = dist(pointA.vector.x, pointA.vector.y, pointB.vector.x, pointB.vector.y);
    return distance;
+}
+
+function getRouteLength(route) {
+    /*
+    Returns total length of given route.
+    */
+    var totalDistance = 0;
+    for (var i = 0; i < route.length - 1; i++) {
+        let point = points[route[i]];
+        let nextPoint = points[route[i+1]];
+        let distance = dist(point.vector.x, point.vector.y, nextPoint.vector.x, nextPoint.vector.y);
+        totalDistance += distance;
+    }
+    return totalDistance;
 }

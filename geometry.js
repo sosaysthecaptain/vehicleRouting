@@ -62,15 +62,28 @@ function insertNearestPoint(route) {
 
     // find the nearest point
     let nearestPointIndex = findPointNearestRoute(route);
+    console.log('nearest point: ' + nearestPointIndex)
 
     var bestCandidateRouteLength = Infinity;
     var bestCandidateRoute = [];
     // for position in route, construct a candidate route
     for (var i = 0; i < route.length; i++) {
-        var candidateArray = route.slice();
-        insertPointIntoRoute(nearestPointIndex, route);
-        console.log(candidateArray);
+        var candidateRoute = route.slice();
+        insertPointIntoRoute(nearestPointIndex, candidateRoute, i);
+        let candidateRouteLength = getRouteLength(candidateRoute);
+
+        console.log(candidateRoute + ', length: ' + candidateRouteLength);
+        if (candidateRouteLength < bestCandidateRouteLength) {
+            bestCandidateRouteLength = candidateRouteLength;
+            bestCandidateRoute = candidateRoute.slice();
+        }
     }
+    console.log('best candidate route: ' + bestCandidateRoute)
+    route = bestCandidateRoute.slice(0);
+    console.log(route);
+    //updateUnassignedPoints();
+    //drawRoutes();
+    return route;
 }
 
 function findPointNearestRoute(route) {
@@ -88,10 +101,7 @@ function findPointNearestRoute(route) {
         for (var j = 0; j < unassignedPoints.length; j++) {
             let candidatePointIndex = unassignedPoints[j];
             let distance = getDistanceBetweenPoints(routePointIndex, candidatePointIndex);
-            console.log('checking points ' + routePointIndex + ' and ' + candidatePointIndex);
-            console.log('  distance: ' + distance);
             if (distance < bestDistance) {
-                console.log('  BEST DISTANCE');
                 bestDistance = distance;
                 bestPointIndex = candidatePointIndex;
             }
@@ -99,6 +109,7 @@ function findPointNearestRoute(route) {
     }
 
     highlightPoint(bestPointIndex);
+    return bestPointIndex;
 }
 
 

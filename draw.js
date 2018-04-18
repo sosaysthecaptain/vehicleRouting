@@ -71,6 +71,58 @@ function drawRoutes() {
     endShape();
 }
 
+function drawHistoricRoute(animateIndex) {
+    /*
+    Draws historic route of given index.
+
+    In the process, overwrites current routeA and routeB variables. Later resets them to the latest entry in history.
+    */
+    
+    // set routes
+    routeA = routeAHistory[animateIndex];
+    routeB = routeBHistory[animateIndex];
+
+    // updateUnassignedPoints here, save typing
+    updateUnassignedPoints();
+
+    // reset background, draw map
+    background(0);
+    drawPointArray(points);
+
+    // routeA
+    stroke(204, 0, 102);
+    beginShape();
+    for(var i = 0; i < routeA.length; i++) {
+        var pointIndex = routeA[i];
+        var pointInstance = points[pointIndex];
+        vertex(pointInstance.vector.x, pointInstance.vector.y);
+        ellipse(pointInstance.vector.x, pointInstance.vector.y, 7, 7);
+    }
+    endShape();
+
+    // routeB
+    stroke(0, 255, 255);
+    beginShape();
+    for(var i = 0; i < routeB.length; i++) {
+        var pointIndex = routeB[i];
+        var pointInstance = points[pointIndex];
+        vertex(pointInstance.vector.x, pointInstance.vector.y);
+        ellipse(pointInstance.vector.x, pointInstance.vector.y, 7, 7);
+    }
+    endShape();
+
+    // reset global routeA and routeB to their latest values
+    resetRouteAB();
+}
+
+function resetRouteAB() {
+    /*
+    Helper function. Resets routeA and routeB to the latest in the history.
+    */
+   routeA = routeAHistory[routeAHistory.length - 1].slice(0);
+   routeB = routeBHistory[routeBHistory.length - 1].slice(0);
+}
+
 var highlightIndex = -1;
 function highlightSequentially() {
     /*

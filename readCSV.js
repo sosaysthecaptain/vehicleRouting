@@ -53,7 +53,8 @@ function generateRandomPoint() {
   Generates a point with random x and y values. GPS coordinates not given.
   */
 
-  let newPoint = new point('NA', 'NA', random(minX, maxX), random(minY, maxY));
+  let pointName = 'point' + pointIndex;
+  let newPoint = new point(pointName, 'NA', random(minX, maxX), random(minY, maxY));
   return newPoint;
 }
 

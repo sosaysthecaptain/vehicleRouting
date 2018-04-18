@@ -6,9 +6,9 @@ function logCurrentRouteStats() {
    let routeALength = getRouteLength(routeA);
    let routeBLength = getRouteLength(routeB);
    let totalRouteLength = routeALength + routeBLength;
-   console.log('Total route length: ' + floor(totalRouteLength));
-   console.log('  RouteA: ' + floor(routeALength));
-   console.log('  RouteB: ' + floor(routeBLength));
+//    console.log('Total route length: ' + floor(totalRouteLength));
+//    console.log('  RouteA: ' + floor(routeALength));
+//    console.log('  RouteB: ' + floor(routeBLength));
 }
 
 function neighborhoodDestroy() {

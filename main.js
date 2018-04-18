@@ -3,8 +3,8 @@ var unassignedPoints = [];
 var routeA = [0, 1, 0];      // route points are denoted by index values of points array
 var routeB = [0, 2, 0];
 
-var routeAInsertAfter = 0;      // variable for index of next insertion, routeA
-var routeBInsertAfter = 0;      // variable for index of next insertion, routeA
+var routeAHistory = [];
+var routeBHistory = [];
 
 var minX = 0;         // tend to be around -87, so this is much higher
 var maxX = -100;      // tend to be around -87, so this is much lower
@@ -46,78 +46,39 @@ function draw() {
 }
 
 // ********************************
-function buildRoutes() {
+function solve() {
   /*
-  Main function to build best guess routes. Procedure:
-    1) Find furthest point from depot, and furthest point from that. 
+  Call this to solve the map.
   */
-}
+  console.log('SOLVING MAP');
+  routeAHistory = [];
+  routeBHistory = [];
 
+  assembleRoutes();
 
-// *********************************
-// old stuff below here
-
-
-
-function calcDistance(points, order) {
-  var sum = 0;
-  for (var i = 0; i < order.length - 1; i++) {
-    var cityAIndex = order[i];
-    var cityA = points[cityAIndex];
-    var cityBIndex = order[i + 1];
-    var cityB = points[cityBIndex];
-    var d = dist(cityA.x, cityA.y, cityB.x, cityB.y);
-    sum += d;
-  }
-  return sum;
-}
-
-
-// *********
-
-
-
-function logRoutePairs(routePairInstance) {
-  /*
-  Logs routes and distances to console.
-  */
-  //routePairInstance.addDepot();
-  //routePairInstance.calcTotalDistance();
-
-  var routeA = routePairInstance.routeAWithDepot;
-  var routeB = routePairInstance.routeBWithDepot;
-  var routeANames = [];
-  var routeBNames = [];
-
-  for (var i = 0; i < routeA.length; i++) {
-    routeANames.push(routeA[i].pointName);
-    routeBNames.push(routeB[i].pointName);
-  }
-
-  console.log('ROUTE PAIR SUMMARY');
-  console.log('Overall distance: ' + floor(routePairInstance.totalDistance));
-  console.log('Route A (green), total distance: ' + floor(routePairInstance.totalDistanceA));
-  for (var i = 0; i < routeANames.length; i++) {
-    if (i < routeANames.length - 1) {
-      let pointAtIndex = routeA[i];
-      let nextPoint = routeA[i+1];
-      let distance = dist(pointAtIndex.relX, pointAtIndex.relY, nextPoint.relX, nextPoint.relY)
-      console.log('    ' + i + ': ' + routeANames[i] + ', distance: ' + floor(distance));
-    } else {
-      console.log('    ' + i + ': ' + routeANames[i]);
-    }
-    
-  }
-  console.log('Route B (blue), total distance: ' + floor(routePairInstance.totalDistanceB));
-  for (var i = 0; i < routeBNames.length; i++) {
-    if (i < routeBNames.length - 1) {
-      let pointAtIndex = routeB[i];
-      let nextPoint = routeB[i+1];
-      let distance = dist(pointAtIndex.relX, pointAtIndex.relY, nextPoint.relX, nextPoint.relY)
-      console.log('    ' + i + ': ' + routeBNames[i] + ', distance: ' + floor(distance));
-    } else {
-      console.log('    ' + i + ': ' + routeBNames[i]);
-    }
-  }
+  console.log('MAP SOLVED. Showing animation of steps...')
+  console.log('  to view again, call animate()');
+  logSolution();
+  setTimeout(animate, 1000);
   
+}
+
+var animateIndex = 0;
+function animate() {
+  /*
+  Animates all the steps the solve() function went through to solve the map. Callable only once solve has run.
+  */
+
+ animateIndex += 1;
+  if (animateIndex < routeAHistory.length) {
+      background(0);
+      drawPointArray(points);
+
+      drawHistoricRoute(animateIndex);
+
+      //console.log('  Showing animation: step ' + animateIndex);
+      setTimeout(animate, 100);
+  } else {
+    animateIndex = -1;
+  }
 }

@@ -28,6 +28,7 @@ function addNextPair() {
         updateUnassignedPoints();
     }
     drawRoutes();
+    recordRouteHistory();
 }
 
 function findFurthestFromPoint(referencePointIndex) {
@@ -80,7 +81,7 @@ function addSeedPoints() {
     insertPointIntoRoute(routeBSeedIndex, routeB, 1);
 
     drawRoutes();
-
+    recordRouteHistory();
 }
 
 function insertNearestPoint(route) {
@@ -395,4 +396,66 @@ function getDistanceOfPointFromRoute(pointIndex, route) {
        }
    }
    return bestDistance;
+}
+
+function recordRouteHistory() {
+    /*
+    Adds the current routeA and routeB to the routeHistory arrays.
+    */
+    routeAHistory.push(routeA);
+    routeBHistory.push(routeB);
+}
+
+function getRealRouteDistance(route) {
+    /*
+    Given route, returns distance in miles, rounded to nearest hundredth.
+    */
+   let distance = getRouteLength(route);
+   let realWorldDistance = distance * 0.3564;
+   return realWorldDistance;
+}
+
+function getRealDistance(pointIndexA, pointIndexB) {
+    /*
+    Given two point indices, returns the distance in miles between them.
+    */
+   let distance = getDistanceBetweenPoints(pointIndexA, pointIndexB);
+   let realWorldDistance = distance * 0.3564;
+   return realWorldDistance;
+}
+
+function logSolution() {
+    /*
+    Logs final routes to the console.
+    */
+   let routeARealDistance = getRealRouteDistance(routeA);
+   let routeBRealDistance = getRealRouteDistance(routeB);
+   let overallRealDistance = routeARealDistance + routeBRealDistance;
+   console.log('***********************');
+   console.log('ROUTE SUMMARY');
+   console.log('    Overall distance: ' + floor(overallRealDistance) + ' miles');
+
+   // routeA
+   console.log('RouteA, ' + floor(routeARealDistance) + ' miles. Stops:');
+    for (var i = 0; i < routeA.length - 1; i++) {
+        let pointItself = points[routeA[i]];
+        let distToNext = getRealDistance(routeA[i], routeA[i+1]);
+        distToNext = distToNext.toFixed(1);
+        console.log('    ' + pointItself.pointName + ', i = ' + pointItself.index + '. Dist: ' + distToNext);
+    }
+    let lastOfRouteA = points[routeA[routeA.length - 1]];
+    console.log('    ' + lastOfRouteA.pointName + ', i = ' + lastOfRouteA.index + '.');
+
+    // routeB
+    console.log('RouteB, ' + floor(routeBRealDistance) + ' miles. Stops:');
+   for (var i = 0; i < routeB.length - 1; i++) {
+       let pointItself = points[routeB[i]];
+       let distToNext = getRealDistance(routeB[i], routeB[i+1]);
+       distToNext = distToNext.toFixed(1);
+       console.log('    ' + pointItself.pointName + ', i = ' + pointItself.index + '. Dist: ' + distToNext);
+   }
+   let lastOfRouteB = points[routeA[routeB.length - 1]];
+   console.log('    ' + lastOfRouteB.pointName + ', i = ' + lastOfRouteB.index + '.');
+
+   
 }

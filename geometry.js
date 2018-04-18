@@ -1,5 +1,32 @@
 // Functions pertaining to geometry and routing
 
+function assembleRoutes() {
+    /*
+    Inserts seed points, then greedily adds points to each array.
+    */
+    addSeedPoints();
+    while (unassignedPoints.length > 0) {
+        addNextPair();
+    }
+    logCurrentRouteStats();
+}
+
+function addNextPair() {
+    /*
+    Adds the next closest point to both routes, stepwise. Updates and draws.
+    */
+
+    if (unassignedPoints.length > 0) {
+        routeA = insertNearestPoint(routeA);
+        updateUnassignedPoints();
+    }
+    if (unassignedPoints.length > 0) {
+        routeB = insertNearestPoint(routeB);
+        updateUnassignedPoints();
+    }
+    drawRoutes();
+}
+
 function findFurthestFromPoint(referencePointIndex) {
     /*
     Finds point the furthest from the given point index. Excludes depot in search
@@ -55,34 +82,30 @@ function addSeedPoints() {
 
 function insertNearestPoint(route) {
     /*
-    Given a route, inserts the nearest point into the position which produces the shortest possible route.
+    Given a route, inserts the nearest point into the position which produces the shortest possible route. Returns the route with the added point. User must assign returned route to its original variable and redraw the routes.
+
+    VERY IMPORTANT: call updateUnassignedPoints() before using this function a second time.
 
     Makes use of findPointNearestRoute() and getRouteLength()
     */
 
     // find the nearest point
     let nearestPointIndex = findPointNearestRoute(route);
-    console.log('nearest point: ' + nearestPointIndex)
 
     var bestCandidateRouteLength = Infinity;
     var bestCandidateRoute = [];
     // for position in route, construct a candidate route
-    for (var i = 0; i < route.length; i++) {
+    for (var i = 1; i < route.length; i++) {
         var candidateRoute = route.slice();
         insertPointIntoRoute(nearestPointIndex, candidateRoute, i);
         let candidateRouteLength = getRouteLength(candidateRoute);
 
-        console.log(candidateRoute + ', length: ' + candidateRouteLength);
         if (candidateRouteLength < bestCandidateRouteLength) {
             bestCandidateRouteLength = candidateRouteLength;
             bestCandidateRoute = candidateRoute.slice();
         }
     }
-    console.log('best candidate route: ' + bestCandidateRoute)
     route = bestCandidateRoute.slice(0);
-    console.log(route);
-    //updateUnassignedPoints();
-    //drawRoutes();
     return route;
 }
 
@@ -147,7 +170,6 @@ function resetRoutes() {
     routeA = [0, 0];
     routeB = [0, 0];
 
-    updateUnassignedPoints();
     drawRoutes();
 }
 
@@ -168,7 +190,6 @@ function insertPointIntoRoute(pointIndexToInsert, route, atIndex) {
     // check to make sure point isn't already in route. If it is, do nothing
     if (!route.includes(pointIndexToInsert)) {
         route.splice(atIndex, 0, pointIndexToInsert);
-        updateUnassignedPoints();
         drawRoutes();
     } else {
         console.log('point already in route');

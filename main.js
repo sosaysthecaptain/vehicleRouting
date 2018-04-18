@@ -14,11 +14,20 @@ var maxY = 0;         // tend to be around 41, so this is much lower
 var pointIndex = 0;
 
 var csv;
+let depot;
+
 
 function preload() {
+  /*
+  Loads CSV (note: must be running on a server for this to work).
 
-  // for this to work, script must be running on server
+  Set csv file and depot coordinates here.
+  */
+  //csv = loadStrings('./testing/coordsTest.csv');
   csv = loadStrings('./testing/coordsTest2.csv');
+  //csv = loadStrings('coords.csv');
+  //depot = new point('Depot', 'NA', -87.6618988, 41.8851024);        // real depot
+  depot = new point('TestDepot', 'NA', -86, 41);                       // test map depot
 }
 
 function setup() {

@@ -41,6 +41,9 @@ function drawRoutes() {
     Draws both routes. routeA is magenta, routeB is teal
     */
 
+    // updateUnassignedPoints here, save typing
+    updateUnassignedPoints();
+
     // reset background, draw map
     background(0);
     drawPointArray(points);
@@ -66,4 +69,24 @@ function drawRoutes() {
         ellipse(pointInstance.vector.x, pointInstance.vector.y, 7, 7);
     }
     endShape();
+}
+
+var highlightIndex = -1;
+function highlightSequentially() {
+    /*
+    Debug method. Iterates through all points in points, logging their index and name to the console.
+
+    Recursive implementation. If highlightIndex is not above points.length, highlights/logs, and then calls self with setTimeout. At the end, resets highlightIndex to -1. 
+    */
+    highlightIndex += 1;
+    if (highlightIndex < points.length) {
+        background(0);
+        drawPointArray(points);
+        highlightPoint(highlightIndex);
+        console.log('index: ' + highlightIndex, 'name: ' + points[highlightIndex].pointName);
+        setTimeout(highlightSequentially, 1000);
+    } else {
+        highlightIndex = -1;
+    }
+    
 }

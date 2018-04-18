@@ -4,8 +4,7 @@ function processCSV() {
     */
 
     // set depot manually
-    //let depot = new point('Depot', 'NA', -87.6618988, 41.8851024);        // real depot
-    let depot = new point('TestDepot', 'NA', -86, 41);                       // test map depot
+
     points.push(depot);
 
     for (var i = 1; i < csv.length; i++) {

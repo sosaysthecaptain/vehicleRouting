@@ -36,6 +36,13 @@ function generateRandomMap(numberOfPoints) {
   /*
   Generates a random map with specified number of points.
   */
+  // set testMap mins and maxes
+  minX = -88;      
+  maxX = -84;   
+  minY = 40;     
+  maxY = 42.2; 
+
+  createTestDepot();
   points = [];
   unassignedPoints = [];
   pointIndex = 1;                     // accomodate the fact that depot has already been generated
@@ -46,6 +53,7 @@ function generateRandomMap(numberOfPoints) {
   }
 
   resetRoutes();
+  drawDepot();
 }
 
 function generateRandomPoint() {
@@ -56,6 +64,15 @@ function generateRandomPoint() {
   let pointName = 'point' + pointIndex;
   let newPoint = new point(pointName, 'NA', random(minX, maxX), random(minY, maxY));
   return newPoint;
+}
+
+function createTestDepot() {
+  /*
+  Instantiates test depot, overwriting depot. Must be done as a standalone function, because otherwise it will mess up max/min values.
+  */
+  testDepot = new point('TestDepot', 'NA', -86, 41);                // test map depot
+  testDepot.index = 0;
+  depot = testDepot;
 }
 
 // A handy gift of the internet, from http://www.greywyvern.com/?post=258

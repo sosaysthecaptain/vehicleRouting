@@ -18,6 +18,7 @@ var pointIndex = 0;
 
 var csv;
 let depot;
+let testDepot;
 
 
 function preload() {
@@ -26,11 +27,12 @@ function preload() {
 
   Set csv file and depot coordinates here.
   */
+  depot = new point('Depot', 'NA', -87.6618988, 41.8851024);        // real depot
+  //testDepot = new point('TestDepot', 'NA', -86, 41);                // test map depot
+  //createTestDepot();                                              // COMMENT OUT IF USING REAL MAP
   //csv = loadStrings('./testing/coordsTest.csv');
   //csv = loadStrings('./testing/coordsTest2.csv');
   csv = loadStrings('coords.csv');
-  depot = new point('Depot', 'NA', -87.6618988, 41.8851024);        // real depot
-  //depot = new point('TestDepot', 'NA', -86, 41);                       // test map depot
 }
 
 function setup() {
@@ -60,8 +62,16 @@ function solve() {
   assembleRoutes();
 
   console.log('MAP SOLVED. Showing animation of steps...')
-  console.log('  to view again, call animate()');
+  //console.log('  to view again, call animate()');
   logSolution();
+  console.log('***********************');
+  console.log('Available commands:');
+  console.log('  - animate() - replay the animation');
+  console.log('  - zoomInOnCity() - zoom in on Chicago proper');
+  console.log('  - resetZoom() - restore original zoom');
+  console.log('  - generateRandomMap(numberOfPoints) - generate a random map');
+  console.log('  - solve() - solve current map');
+  console.log('  see documentation for additional functionality');
   setTimeout(animate, 1000);
   
 }

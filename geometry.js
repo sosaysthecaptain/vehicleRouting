@@ -90,7 +90,7 @@ function insertNearestPoint(route) {
     */
 
     // find the nearest point
-    let nearestPointIndex = findPointNearestRoute(route);
+    let nearestPointIndex = findPointWithLowestCostOfAddition(route);
 
     var bestCandidateRouteLength = Infinity;
     var bestCandidateRoute = [];
@@ -112,6 +112,8 @@ function insertNearestPoint(route) {
 function findPointNearestRoute(route) {
     /*
     Returns index of unassigned point nearest one of the points on the given route.
+
+    SUPERCEDED BY findPointWithLowestCostOfAddition
     */
    var bestDistance = Infinity;
    var bestPointIndex = 0;
@@ -195,6 +197,45 @@ function insertPointAtBestLocationInRoute(pointIndex, route) {
     return bestCandidateRoute;
 }
 
+function findPointWithLowestCostOfAddition(route) {
+    /*
+    Finds the point that would cost the least additional distance to add to the route.
+    */
+    
+    var bestDistance = Infinity;
+    var bestPointIndex = 0;
+
+    // for unassigned points, find the one with the least cost of addition
+    for (var i = 0; i < unassignedPoints.length; i++) {
+        let additionalDistance = getCostOfAddingPointToRoute(unassignedPoints[i], route);
+        if (additionalDistance < bestDistance) {
+            bestDistance = additionalDistance;
+            bestPointIndex = unassignedPoints[i];
+        }
+    }
+    highlightPoint(bestPointIndex);
+    return bestPointIndex;
+
+    // // for point in route that isn't the depot
+    // for (var i = 1; i < route.length - 1; i++) {
+    //     routePointIndex = route[i];
+
+    //     // iterate through unassignedPoints, find the one that would add the least distance to the route
+    //     for (var j = 0; j < unassignedPoints.length; j++) {
+    //         let candidatePointIndex = unassignedPoints[j];
+    //         let addedDistance = 
+    //         if (distance < bestDistance) {
+    //             bestDistance = distance;
+    //             bestPointIndex = candidatePointIndex;
+    //         }
+    //     }
+    // }
+
+    // highlightPoint(bestPointIndex);
+    // return bestPointIndex;
+
+}
+
 function getCostOfAddingPointToRoute(pointIndex, route) {
     /*
     Returns the additional cost (distance) of adding a point to a specified route.
@@ -219,6 +260,36 @@ function addPointToBestRoute(pointIndex) {
         routeB = insertPointAtBestLocationInRoute(pointIndex, routeB);
     }
     drawRoutes();
+}
+
+function getLeastCostOfAddition(pointIndex) {
+    /*
+    Returns the lowest possible cost of addition of the given point to one or the other of the routes.
+    */
+   let costA = getCostOfAddingPointToRoute(pointIndex, routeA);
+   let costB = getCostOfAddingPointToRoute(pointIndex, routeB);
+   return min(costA, costB);
+}
+
+function heal() {
+    /*
+    While unassigned points exists, finds the one with the least cost of addition and adds it opportunistically.
+    */
+   while(unassignedPoints.length > 0) {
+       // find the one with the lowest cost of addition
+       var bestCostOfAddition = Infinity;
+       var bestPointIndex = 0;
+       for (var i = 0; i < unassignedPoints.length; i++) {
+           let candidateCostOfAddition = getLeastCostOfAddition(unassignedPoints[i]);
+           if (candidateCostOfAddition < bestCostOfAddition) {
+               bestCostOfAddition = candidateCostOfAddition;
+               bestPointIndex = unassignedPoints[i];
+           }
+       }
+
+       // add it
+       addPointToBestRoute(bestPointIndex);
+   }
 }
 
 

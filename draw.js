@@ -142,3 +142,10 @@ function highlightSequentially() {
         highlightIndex = -1;
     }
 }
+
+function zoomInOnCity() {
+    /*
+    For main map, zooms in on Chicago, eliminating the Milwaukee and west suburban locations.
+    */
+   resizeCanvas(300, 300);
+}

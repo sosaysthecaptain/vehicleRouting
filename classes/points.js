@@ -57,4 +57,15 @@ class point {
        this.vector = createVector(this.relX, this.relY);
     }
 
+    setRelXYChicago() {
+        var chicagoMinX = 0;
+        var chicagoMaxX = 0;
+        var chicagoMinY = 0;
+        var chicagoMinY = 0;
+
+        /*
+        Resets relX, relY, and vector with max and min values relevant to the city. To undo this, just call setRelXY again.
+        */
+    }
+
 }

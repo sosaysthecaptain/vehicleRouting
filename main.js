@@ -6,10 +6,13 @@ var routeB = [0, 2, 0];
 var routeAHistory = [];
 var routeBHistory = [];
 
+var bestDistanceToDate = Infinity;
+
 var minX = 0;         // tend to be around -87, so this is much higher
 var maxX = -100;      // tend to be around -87, so this is much lower
 var minY = 100;       // tend to be around 41, so this is much higher
 var maxY = 0;         // tend to be around 41, so this is much lower
+
 
 var pointIndex = 0;
 
@@ -24,10 +27,10 @@ function preload() {
   Set csv file and depot coordinates here.
   */
   //csv = loadStrings('./testing/coordsTest.csv');
-  csv = loadStrings('./testing/coordsTest2.csv');
-  //csv = loadStrings('coords.csv');
-  //depot = new point('Depot', 'NA', -87.6618988, 41.8851024);        // real depot
-  depot = new point('TestDepot', 'NA', -86, 41);                       // test map depot
+  //csv = loadStrings('./testing/coordsTest2.csv');
+  csv = loadStrings('coords.csv');
+  depot = new point('Depot', 'NA', -87.6618988, 41.8851024);        // real depot
+  //depot = new point('TestDepot', 'NA', -86, 41);                       // test map depot
 }
 
 function setup() {

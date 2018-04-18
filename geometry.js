@@ -11,7 +11,13 @@ function assembleRoutes() {
         console.log('  Adding route pair. Points remaining: ' + unassignedPoints.length);
         addNextPair();
     }
-    logCurrentRouteStats();
+    //logCurrentRouteStats();
+
+    // set initial value for bestDistanceToDate
+    let distance = getRouteLength(routeA) + getRouteLength(routeB);
+    if (distance < bestDistanceToDate) {
+        bestDistanceToDate = distance;
+    }
 }
 
 function addNextPair() {
@@ -426,7 +432,7 @@ function getRealDistance(pointIndexA, pointIndexB) {
 
 function logSolution() {
     /*
-    Logs final routes to the console.
+    Logs final output to the console.
     */
    let routeARealDistance = getRealRouteDistance(routeA);
    let routeBRealDistance = getRealRouteDistance(routeB);

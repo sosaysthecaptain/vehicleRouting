@@ -10,3 +10,9 @@ function logCurrentRouteStats() {
    console.log('  RouteA: ' + floor(routeALength));
    console.log('  RouteB: ' + floor(routeBLength));
 }
+
+function neighborhoodDestroy() {
+    /*
+    Takes out an entire neighborhood
+    */
+}

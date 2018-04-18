@@ -4,7 +4,6 @@ function processCSV() {
     */
 
     // set depot manually
-
     points.push(depot);
 
     for (var i = 1; i < csv.length; i++) {
@@ -31,6 +30,31 @@ function processCSV() {
       unassignedPoints.push(points[i].index);
     }
     
+}
+
+function generateRandomMap(numberOfPoints) {
+  /*
+  Generates a random map with specified number of points.
+  */
+  points = [];
+  unassignedPoints = [];
+  pointIndex = 1;                     // accomodate the fact that depot has already been generated
+  points.push(depot);
+
+  for (var i = 0; i < numberOfPoints; i++) {
+    points.push(generateRandomPoint());
+  }
+
+  resetRoutes();
+}
+
+function generateRandomPoint() {
+  /* 
+  Generates a point with random x and y values. GPS coordinates not given.
+  */
+
+  let newPoint = new point('NA', 'NA', random(minX, maxX), random(minY, maxY));
+  return newPoint;
 }
 
 // A handy gift of the internet, from http://www.greywyvern.com/?post=258

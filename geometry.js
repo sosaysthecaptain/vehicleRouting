@@ -4,8 +4,11 @@ function assembleRoutes() {
     /*
     Inserts seed points, then greedily adds points to each array.
     */
+
+    console.log('Assembling initial routes...');
     addSeedPoints();
     while (unassignedPoints.length > 0) {
+        console.log('  Adding route pair. Points remaining: ' + unassignedPoints.length);
         addNextPair();
     }
     logCurrentRouteStats();

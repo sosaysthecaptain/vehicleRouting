@@ -29,10 +29,10 @@ function preload() {
   */
   depot = new point('Depot', 'NA', -87.6618988, 41.8851024);        // real depot
   //testDepot = new point('TestDepot', 'NA', -86, 41);                // test map depot
-  //createTestDepot();                                              // COMMENT OUT IF USING REAL MAP
+  createTestDepot();                                              // COMMENT OUT IF USING REAL MAP
   //csv = loadStrings('./testing/coordsTest.csv');
-  //csv = loadStrings('./testing/coordsTest2.csv');
-  csv = loadStrings('coords.csv');
+  csv = loadStrings('./testing/coordsTest2.csv');
+  //csv = loadStrings('coords.csv');
 }
 
 function setup() {

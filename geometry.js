@@ -378,6 +378,7 @@ function getDistanceBetweenPoints(pointAIndex, pointBIndex) {
     */
    let pointA = points[pointAIndex];
    let pointB = points[pointBIndex];
+
    let distance = dist(pointA.vector.x, pointA.vector.y, pointB.vector.x, pointB.vector.y);
    return distance;
 }
@@ -440,6 +441,34 @@ function getRealDistance(pointIndexA, pointIndexB) {
    return realWorldDistance;
 }
 
+function convertRealDistance(distance) {
+    /*
+    Converts from p5 distance to real world distance.
+    */
+   return distance * 0.3564;
+}
+
+function getPointsInRange(pointIndex, range) {
+    /*
+    Returns array of pointIndices within range of the specified point. If range is given as zero, returns only the point itself.
+    */
+    var returnArray = [pointIndex];
+    if (range > 0) {
+        for (var i = 0; i < points.length; i++) {
+            let distanceToPoint = getDistanceBetweenPoints(pointIndex, i);
+            if (distanceToPoint < range) {
+                returnArray.push(i);
+            }
+        }
+    }
+
+    // debug
+    for (var i = 0; i < returnArray.length; i++) {
+        highlightPoint(returnArray[i]);
+    }
+    return returnArray;
+}
+
 function logSolution() {
     /*
     Logs final output to the console.
@@ -472,4 +501,15 @@ function logSolution() {
    }
    let lastOfRouteB = points[routeA[routeB.length - 1]];
    console.log('    ' + lastOfRouteB.pointName + ', i = ' + lastOfRouteB.index + '.');
+}
+
+function getTotalRouteLength() {
+    /*
+    Returns total length of current routes.
+    */
+    var routeADistance = getRouteLength(routeA);
+    let routeBDistance = getRouteLength(routeB);
+   
+    return routeADistance + routeBDistance;
+
 }

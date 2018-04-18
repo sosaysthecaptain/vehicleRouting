@@ -70,8 +70,8 @@ function createTestDepot() {
   /*
   Instantiates test depot, overwriting depot. Must be done as a standalone function, because otherwise it will mess up max/min values.
   */
+  pointIndex = 0;
   testDepot = new point('TestDepot', 'NA', -86, 41);                // test map depot
-  testDepot.index = 0;
   depot = testDepot;
 }
 

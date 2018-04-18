@@ -19,7 +19,12 @@ function unassignPointsWithinDistance(pointIndex, distance) {
     */
     let pointsWithinRange = getPointsInRange(pointIndex, distance)
     for (var i = 0; i < pointsWithinRange.length; i++) {
-        removeFromRoute(pointsWithinRange[i]);
+        let pointIndex = pointsWithinRange[i];
+        
+        // don't unassign the depot!
+        if (pointIndex != 0) {
+            removeFromRoute(pointsWithinRange[i]);
+        }
     }
     drawRoutes();
 }
@@ -68,4 +73,5 @@ function checkIfBestAndReassign() {
         routeA = routeAHistory[routeAHistory.length - 1].slice(0);
         routeB = routeBHistory[routeBHistory.length - 1].slice(0);
     }
+    drawRoutes();
 }

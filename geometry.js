@@ -10,6 +10,7 @@ function assembleRoutes() {
     while (unassignedPoints.length > 0) {
         console.log('  Adding route pair. Points remaining: ' + unassignedPoints.length);
         addNextPair();
+        drawRoutes();
     }
     //logCurrentRouteStats();
 

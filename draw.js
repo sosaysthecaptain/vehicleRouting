@@ -23,6 +23,19 @@ function drawPointArray(pointArray) {
     }
 }
 
+function drawDepot() {
+    /*
+    Draws depot in red. Useful as a standalone function so it can be drawn on top of things that cover it up.
+    */
+
+    stroke(255, 0, 0);
+    strokeWeight(4);
+    noFill();
+    beginShape();
+    ellipse(points[0].vector.x, points[0].vector.y, 4, 4);
+    endShape();
+}
+
 
 function highlightPoint(pointIndex) {
     /*
@@ -147,5 +160,28 @@ function zoomInOnCity() {
     /*
     For main map, zooms in on Chicago, eliminating the Milwaukee and west suburban locations.
     */
-   resizeCanvas(300, 300);
+   for (var i = 0; i < points.length; i++) {
+       points[i].setRelXYChicago();
+   }
+
+   // redraw everything
+   background(0);
+   drawPointArray(points);
+   drawRoutes();
+   drawDepot();
+}
+
+function resetZoom() {
+    /*
+    For main map, zooms in on Chicago, eliminating the Milwaukee and west suburban locations.
+    */
+   for (var i = 0; i < points.length; i++) {
+       points[i].setRelXY();
+   }
+
+   // redraw everything
+   background(0);
+   drawPointArray(points);
+   drawRoutes();
+   drawDepot();
 }

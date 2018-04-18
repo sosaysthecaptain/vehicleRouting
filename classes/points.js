@@ -58,14 +58,20 @@ class point {
     }
 
     setRelXYChicago() {
-        var chicagoMinX = 0;
-        var chicagoMaxX = 0;
-        var chicagoMinY = 0;
-        var chicagoMinY = 0;
-
         /*
         Resets relX, relY, and vector with max and min values relevant to the city. To undo this, just call setRelXY again.
         */
+       var chicagoMinX = -87.68;               // global is -88.1733328
+       var chicagoMaxX = -87.6;             // global is -87.62095      less negative is east
+       var chicagoMinY = 41.87;              // global is 41.7883501     
+       var chicagoMaxY = 41.9;              // global is 43.0758306     up is north
+
+        // map function: first two are range of pointX, second two are range of desired output
+       this.relX = map(this.pointX, chicagoMinX, chicagoMaxX, 20, 580);
+       this.relY = map(this.pointY, chicagoMinY, chicagoMaxY, 580, 20);       // since 
+       
+       // create vector for map point
+       this.vector = createVector(this.relX, this.relY);
     }
 
 }

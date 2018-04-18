@@ -339,6 +339,16 @@ function resetRoutes() {
     drawRoutes();
 }
 
+function logMaxMinCoords() {
+    /*
+    Logs global minX, maxX, minY, maxY.
+    */
+    console.log('minX: ' + minX);
+    console.log('maxX: ' + maxX);
+    console.log('minY: ' + minY);
+    console.log('maxY: ' + maxY);
+}
+
 function removeNumberFromArray(number, array) {
     /*
     If given number is in the array, this function removes it. If not, it does nothing.
@@ -462,6 +472,4 @@ function logSolution() {
    }
    let lastOfRouteB = points[routeA[routeB.length - 1]];
    console.log('    ' + lastOfRouteB.pointName + ', i = ' + lastOfRouteB.index + '.');
-
-   
 }

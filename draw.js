@@ -82,11 +82,11 @@ function highlightSequentially() {
     if (highlightIndex < points.length) {
         background(0);
         drawPointArray(points);
+        drawRoutes();
         highlightPoint(highlightIndex);
         console.log('index: ' + highlightIndex, 'name: ' + points[highlightIndex].pointName);
-        setTimeout(highlightSequentially, 1000);
+        setTimeout(highlightSequentially, 750);
     } else {
         highlightIndex = -1;
     }
-    
 }

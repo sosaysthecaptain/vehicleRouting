@@ -135,6 +135,91 @@ function findPointNearestRoute(route) {
     return bestPointIndex;
 }
 
+function removeFromRoute(pointIndex) {
+    /*
+    Removes specified point from route, whichever it happens to be in. Redraws. Does nothing if point not in route.
+    */
+//    if (routeA.includes(pointIndex)) {
+//        console.log('point in routeA');
+//        removeNumberFromArray(pointIndex, routeA);
+//    } else if (routeB.includes(pointIndex)) {
+//        console.log('point in routeB');
+//        removeNumberFromArray(pointIndex, routeB);
+//    }
+   removeNumberFromArray(pointIndex, routeA);
+   removeNumberFromArray(pointIndex, routeB);
+   drawRoutes();
+
+}
+
+// function addPointToClosestRoute(pointIndex) {
+//     /*
+//     Given an unassigned point, adds it to the most logical route.
+//     */
+
+//     // find the closest route
+//     let distanceFromRouteA = getDistanceOfPointFromRoute(pointIndex, routeA);
+//     let distanceFromRouteB = getDistanceOfPointFromRoute(pointIndex, routeB);
+
+//     if (distanceFromRouteA < distanceFromRouteB) {
+//         // add to routeA
+//         routeA = insertPointAtBestLocationInRoute(pointIndex, routeA);
+//     } else {
+//         // add to routeB
+//         routeB = insertPointAtBestLocationInRoute(pointIndex, routeB);
+//     }
+//     drawRoutes();
+// }
+
+function insertPointAtBestLocationInRoute(pointIndex, route) {
+    /*
+    Given a pointIndex and a route, adds the point at the most logical place in the route.
+
+    Returns route. Note: this means that assignment/drawing must be done manually.
+    */
+
+    var bestCandidateRouteLength = Infinity;
+    var bestCandidateRoute = [];
+    // for position in route, construct a candidate route
+    for (var i = 1; i < route.length; i++) {
+        var candidateRoute = route.slice();
+        insertPointIntoRoute(pointIndex, candidateRoute, i);
+        let candidateRouteLength = getRouteLength(candidateRoute);
+
+        if (candidateRouteLength < bestCandidateRouteLength) {
+            bestCandidateRouteLength = candidateRouteLength;
+            bestCandidateRoute = candidateRoute.slice();
+        }
+    }
+
+    return bestCandidateRoute;
+}
+
+function getCostOfAddingPointToRoute(pointIndex, route) {
+    /*
+    Returns the additional cost (distance) of adding a point to a specified route.
+    */
+   let baselineDistance = getRouteLength(route);
+   let candidateRoute = insertPointAtBestLocationInRoute(pointIndex, route);
+   let candidateDistance = getRouteLength(candidateRoute);
+   return (candidateDistance - baselineDistance);
+}
+
+function addPointToBestRoute(pointIndex) {
+    /*
+    Adds point to route to which its addition will add the least total distance.
+    */
+
+    let marginalDistanceA = getCostOfAddingPointToRoute(pointIndex, routeA);
+    let marginalDistanceB = getCostOfAddingPointToRoute(pointIndex, routeB);
+
+    if (marginalDistanceA < marginalDistanceB) {
+        routeA = insertPointAtBestLocationInRoute(pointIndex, routeA);
+    } else {
+        routeB = insertPointAtBestLocationInRoute(pointIndex, routeB);
+    }
+    drawRoutes();
+}
 
 
 // **************************************************
@@ -218,4 +303,22 @@ function getRouteLength(route) {
         totalDistance += distance;
     }
     return totalDistance;
+}
+
+function getDistanceOfPointFromRoute(pointIndex, route) {
+    /*
+    Returns distance of how near a point is to the closest stop on given route.
+    */
+   var bestDistance = Infinity;
+   var bestCandidateIndex = 0;
+   let referencePoint = points[pointIndex];
+   for (var i = 0; i < route.length; i++) {
+       let candidatePoint = points[route[i]];
+       let distance = dist(referencePoint.vector.x, referencePoint.vector.y, candidatePoint.vector.x, candidatePoint.vector.y);
+       if (distance < bestDistance) {
+           bestDistance = distance;
+           bestCandidateIndex = i;
+       }
+   }
+   return bestDistance;
 }

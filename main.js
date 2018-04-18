@@ -61,6 +61,9 @@ function solve() {
 
   assembleRoutes();
 
+  largeNeighborhoodSearch(0);
+  largeNeighborhoodSearch(50);
+
   console.log('MAP SOLVED. Showing animation of steps...')
   //console.log('  to view again, call animate()');
   logSolution();

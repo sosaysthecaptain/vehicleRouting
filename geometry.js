@@ -500,7 +500,7 @@ function logSolution() {
        distToNext = distToNext.toFixed(1);
        console.log('    ' + pointItself.pointName + ', i = ' + pointItself.index + '. Dist: ' + distToNext);
    }
-   let lastOfRouteB = points[routeA[routeB.length - 1]];
+   let lastOfRouteB = points[routeB[routeB.length - 1]];
    console.log('    ' + lastOfRouteB.pointName + ', i = ' + lastOfRouteB.index + '.');
 }
 

@@ -20,6 +20,7 @@ var csv;
 let depot;
 let testDepot;
 
+var solveNotRun = true;
 
 function preload() {
   /*
@@ -29,10 +30,10 @@ function preload() {
   */
   depot = new point('Depot', 'NA', -87.6618988, 41.8851024);        // real depot
   //testDepot = new point('TestDepot', 'NA', -86, 41);                // test map depot
-  createTestDepot();                                              // COMMENT OUT IF USING REAL MAP
+  //createTestDepot();                                              // COMMENT OUT IF USING REAL MAP
   //csv = loadStrings('./testing/coordsTest.csv');
-  csv = loadStrings('./testing/coordsTest2.csv');
-  //csv = loadStrings('coords.csv');
+  //csv = loadStrings('./testing/coordsTest2.csv');
+  csv = loadStrings('coords.csv');
 }
 
 function setup() {
@@ -41,13 +42,13 @@ function setup() {
   createCanvas(600, 600);
   background(0);
   drawPointArray(points);
-  
 }
 
 function draw() {
-  /*
-
-  */
+  // if (solveNotRun) {
+  //   solveNotRun = false;
+  //   solve();
+  // }
 }
 
 // ********************************
@@ -62,7 +63,7 @@ function solve() {
   assembleRoutes();
 
   largeNeighborhoodSearch(0);
-  largeNeighborhoodSearch(50);
+  //largeNeighborhoodSearch(5);
 
   console.log('MAP SOLVED. Showing animation of steps...')
   //console.log('  to view again, call animate()');

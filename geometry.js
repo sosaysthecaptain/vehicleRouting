@@ -482,7 +482,7 @@ function logSolution() {
    console.log('    Overall distance: ' + floor(overallRealDistance) + ' miles');
 
    // routeA
-   console.log('RouteA, ' + floor(routeARealDistance) + ' miles. Stops:');
+   console.log('RouteA, ' + floor(routeARealDistance) + ' miles. Stops: ' + (routeA.length - 2));
     for (var i = 0; i < routeA.length - 1; i++) {
         let pointItself = points[routeA[i]];
         let distToNext = getRealDistance(routeA[i], routeA[i+1]);
@@ -493,7 +493,7 @@ function logSolution() {
     console.log('    ' + lastOfRouteA.pointName + ', i = ' + lastOfRouteA.index + '.');
 
     // routeB
-    console.log('RouteB, ' + floor(routeBRealDistance) + ' miles. Stops:');
+    console.log('RouteB, ' + floor(routeBRealDistance) + ' miles. Stops: ' + (routeB.length - 2));
    for (var i = 0; i < routeB.length - 1; i++) {
        let pointItself = points[routeB[i]];
        let distToNext = getRealDistance(routeB[i], routeB[i+1]);

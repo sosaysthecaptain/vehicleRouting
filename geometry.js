@@ -152,37 +152,12 @@ function removeFromRoute(pointIndex) {
     /*
     Removes specified point from route, whichever it happens to be in. Redraws. Does nothing if point not in route.
     */
-//    if (routeA.includes(pointIndex)) {
-//        console.log('point in routeA');
-//        removeNumberFromArray(pointIndex, routeA);
-//    } else if (routeB.includes(pointIndex)) {
-//        console.log('point in routeB');
-//        removeNumberFromArray(pointIndex, routeB);
-//    }
+
    removeNumberFromArray(pointIndex, routeA);
    removeNumberFromArray(pointIndex, routeB);
    drawRoutes();
 
 }
-
-// function addPointToClosestRoute(pointIndex) {
-//     /*
-//     Given an unassigned point, adds it to the most logical route.
-//     */
-
-//     // find the closest route
-//     let distanceFromRouteA = getDistanceOfPointFromRoute(pointIndex, routeA);
-//     let distanceFromRouteB = getDistanceOfPointFromRoute(pointIndex, routeB);
-
-//     if (distanceFromRouteA < distanceFromRouteB) {
-//         // add to routeA
-//         routeA = insertPointAtBestLocationInRoute(pointIndex, routeA);
-//     } else {
-//         // add to routeB
-//         routeB = insertPointAtBestLocationInRoute(pointIndex, routeB);
-//     }
-//     drawRoutes();
-// }
 
 function insertPointAtBestLocationInRoute(pointIndex, route) {
     /*
@@ -226,25 +201,6 @@ function findPointWithLowestCostOfAddition(route) {
     }
     highlightPoint(bestPointIndex);
     return bestPointIndex;
-
-    // // for point in route that isn't the depot
-    // for (var i = 1; i < route.length - 1; i++) {
-    //     routePointIndex = route[i];
-
-    //     // iterate through unassignedPoints, find the one that would add the least distance to the route
-    //     for (var j = 0; j < unassignedPoints.length; j++) {
-    //         let candidatePointIndex = unassignedPoints[j];
-    //         let addedDistance = 
-    //         if (distance < bestDistance) {
-    //             bestDistance = distance;
-    //             bestPointIndex = candidatePointIndex;
-    //         }
-    //     }
-    // }
-
-    // highlightPoint(bestPointIndex);
-    // return bestPointIndex;
-
 }
 
 function getCostOfAddingPointToRoute(pointIndex, route) {

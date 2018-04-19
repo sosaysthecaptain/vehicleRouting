@@ -66,7 +66,6 @@ function solve() {
   //largeNeighborhoodSearch(5);
 
   console.log('MAP SOLVED. Showing animation of steps...')
-  //console.log('  to view again, call animate()');
   logSolution();
   console.log('***********************');
   console.log('Available commands:');
@@ -90,10 +89,7 @@ function animate() {
   if (animateIndex < routeAHistory.length) {
       background(0);
       drawPointArray(points);
-
       drawHistoricRoute(animateIndex);
-
-      //console.log('  Showing animation: step ' + animateIndex);
       setTimeout(animate, 100);
   } else {
     animateIndex = -1;

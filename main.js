@@ -68,6 +68,7 @@ function solve() {
   routeBHistory = [];
 
   assembleRoutes();
+  heal();
 
   largeNeighborhoodSearch(largeNeighborhoodSearchRadius);
 

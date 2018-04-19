@@ -8,9 +8,6 @@ function logCurrentRouteStats() {
    let routeALength = getRouteLength(routeA);
    let routeBLength = getRouteLength(routeB);
    let totalRouteLength = routeALength + routeBLength;
-//    console.log('Total route length: ' + floor(totalRouteLength));
-//    console.log('  RouteA: ' + floor(routeALength));
-//    console.log('  RouteB: ' + floor(routeBLength));
 }
 
 function unassignPointsWithinDistance(pointIndex, distance) {
@@ -42,6 +39,7 @@ function largeNeighborhoodSearch(range) {
     */
 
     console.log('Running large neighborhood search, range: ' + range);
+
     for (var i = 1; i < points.length; i++) {
         console.log('    evaluating point ' + i + ', bestToDate: ' + floor(convertRealDistance(bestDistanceToDate)));
         largeNeighborhoodSearchUnit(i, range);
@@ -52,17 +50,19 @@ function largeNeighborhoodSearchUnit(pointIndex, range) {
     /*
     Unassigns specified neighborhood, heals, assesses. If better, resets routeA and routeB, else returns them to their original state.
     */
+//    console.log(unassignedPoints);
 
     unassignPointsWithinDistance(pointIndex, range);
     heal();
     checkIfBestAndReassign();
+    
 }
 
 function checkIfBestAndReassign() {
     /*
     Checks if current routeA and routeB are the running best. If so, resets best & adds them to the route history. If not, restores them.
     */
-
+   
     let currentDistance = getTotalRouteLength();
     if (currentDistance < bestDistanceToDate) {
         bestDistanceToDate = currentDistance;
@@ -72,6 +72,8 @@ function checkIfBestAndReassign() {
     } else {
         routeA = routeAHistory[routeAHistory.length - 1].slice(0);
         routeB = routeBHistory[routeBHistory.length - 1].slice(0);
+        
     }
+    updateUnassignedPoints();
     drawRoutes();
 }

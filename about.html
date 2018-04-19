@@ -1,22 +1,53 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-
+<!DOCTYPE html>
 <html>
-<head>
-        <rel="stylesheet" type="text/css" href="css/main.css" />
-        <meta http-equiv="content-type" content="text/php; charset=utf-8" />
 
-        <title>Heuristic Vehicle Routing</title>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="vehicle routing">
+    <title>Heuristic Vehicle Routing | Marc Auger</title>
+    <link type="text/css" rel="stylesheet" href="../css/stylesheet.css" />
+    <link rel="icon" href="../globalAssets/favicon/favicon.ico" type="image/x-icon">
+
 </head>
 
 <body>
-    <div class="Container">
-        <h1>Heuristic Vehicle Routing</h1>
+
+    <div class="header">
+
+        <div class="logo">
+            <a href="../index.html">
+                <img src="../globalAssets/logo.svg" width="200"> </a>
+        </div>
+
+        <!-- nav bar -->
+        <div class="navBar">
+            <a href="profilometer.html">Optical Profilometer</a>
+            <a href="space-trader.html">Space Trader</a>
+            <a href="fdm-startup.html">FDM Startup</a>
+            <a href="about.html">About</a>
+        </div>
+    </div>
+
+
+    <div class="pageBody">
+
+        <!-- <div class="pageTitle">
+            <p>FDM Startup</p>
+        </div> -->
+
+        <div class="blogTitle">
+            <p>Heuristic Vehicle Routing</a></br>
+            <span class="blogDate">April 18, 2018</span></p>
+        </div> 
+
+        <div class="pageText">
+            <!-- BODY HTML BEGINS HERE -->
+            
         <h3>INSTRUCTIONS:</h3>
         
         <ul>
-            <li>Live version is hosted at <a href="http://www.marcauger.xyz/vehiclerouting/index.html">http://www.marcauger.xyz/vehiclerouting/index.html</a>. (Note that code must be run from a server for CSV loading to work.) Source is available at <a href="https://github.com/sosaysthecaptain/vehicleRouting">https://github.com/sosaysthecaptain/vehicleRouting</a></li>
+            <li>Live version is hosted at <a href="http://www.marcauger.xyz/vehiclerouting/index.html">http://www.marcauger.xyz/vehiclerouting/index.html</a>. (Note that code must be run from a server for CSV loading to work.) Source is available at <a href="https://github.com/sosaysthecaptain/vehicleRouting">https://github.com/sosaysthecaptain/vehicleRouting</a>.</li>
             <li>To solve the Chicago map, open the console and run "solve()". Problem will be solved, routes outputted to the console, and upon completion an animation will play illustrating each step of the process.</li>
             <li>To generate a random map, run "generateRandomMap(numberOfPoints)", then "solve()".</li>
             <li>Functions available once map has been solved:</li>
@@ -55,5 +86,31 @@
                 <li>Much could be said about how to weight evenness of routes, driving time vs delivery time, load factors, and how to handle the distribution of long drives to Milwaukee vs. frequent stops around Chicago. In designing this heuristic, I assume we want a relatively even distribution in terms of number of stops.</li>
                 <li>To this end, the Chicago map is solved with a neighborhood radius of zero, meaning that rather than unassigning an entire region, only single points are unassigned. Otherwise, all of the close stops bunch up on one route. When running more randomly distributed maps, a larger radius is desirable. Therefore, when solving a random map, the radius is set to 50. Feel free to play around with this--the variable is called largeNeighborhoodSearchRadius. Note that larger radius values increase computational cost significantly on large maps.</li>
           </ul>
+
+        <h3>KNOWN ISSUES</h3>
+    
+        <ul>
+            <li>Occasionally the large neighborhood search will glitch on random maps, failing to return properly improved routes, and leaving several points unassigned. The problem seems to pertain to the drawRoutes() call within checkBestAndReassign().</li>
+        </ul>
+            <!-- BODY HTML ENDS HERE -->
+        </div>
     </div>
+    </div>
+
+    <!-- END BODY -->
+
+    <div class="footer">
+        <p>Copyright ©
+            <script> document.write(new Date().getFullYear()) </script> Marc Auger</p>
+        <a href="archive.html">Archive</a>
+        <a href="profilometer.html">Optical Profilometer</a>
+        <a href="space-trader.html">Space Trader</a>
+        <a href="fdm-startup.html">FDM Startup</a>
+        <a href="about.html">About</a>
+
+        </b>
+    </div>
+
+    </div>
+
 </body>

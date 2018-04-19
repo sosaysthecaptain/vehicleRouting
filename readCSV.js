@@ -36,6 +36,10 @@ function generateRandomMap(numberOfPoints) {
   /*
   Generates a random map with specified number of points.
   */
+
+  // in a random map, a larger neighborhood radius will work better
+  largeNeighborhoodSearchRadius = 50;
+
   // set testMap mins and maxes
   minX = -88;      
   maxX = -84;   

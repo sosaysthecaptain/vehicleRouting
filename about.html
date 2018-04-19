@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<html>
+<head>
+        <rel="stylesheet" type="text/css" href="css/main.css" />
+        <meta http-equiv="content-type" content="text/php; charset=utf-8" />
+
+        <title>Heuristic Vehicle Routing</title>
+</head>
+
+<body>
+    <div class="Container">
+        <h1>Heuristic Vehicle Routing</h1>
+        <h3>INSTRUCTIONS:</h3>
+        
+        <ul>
+            <li>Live version is hosted at <a href="http://www.marcauger.xyz/vehiclerouting/index.html">http://www.marcauger.xyz/vehiclerouting/index.html</a>. (Note that code must be run from a server for CSV loading to work.) Source is available at <a href="https://github.com/sosaysthecaptain/vehicleRouting">https://github.com/sosaysthecaptain/vehicleRouting</a></li>
+            <li>To solve the Chicago map, open the console and run "solve()". Problem will be solved, routes outputted to the console, and upon completion an animation will play illustrating each step of the process.</li>
+            <li>To generate a random map, run "generateRandomMap(numberOfPoints)", then "solve()".</li>
+            <li>Functions available once map has been solved:</li>
+            <ul>
+                <li>animate() - replay the animation</li>
+                <li>zoomInOnCity() - zoom in on Chicago proper</li>
+                <li>resetZoom() - restore original zoom</li>
+                <li>generateRandomMap(numberOfPoints) - generate a random map</li>
+                <li>solve() - solve current map</li>
+            </ul>
+        </ul>
+        
+        
+        <h3>HOW IT WORKS</h3>
+        
+        <p>This project provides approximate solutions to the vehicle routing problem in exponential time with a heuristic method using seed notes, greedy addition, and large neighborhood search. The gist of the control flow is explained here, extensive documentation at a higher level of detail is provided throughout the code. The control flow works as such:</p>
+          
+          <ol>
+              <li>The CSV file containing points is loaded, and for each point an instance of the point class is instantiated, containing both the GPS coordinates and relative coordinates mapped to the screen. All points are loaded into the points array, and are henceforth referenced by index number.</li>
+            
+              <li>The map, represented by the points array, is drawn by the drawPointsArray() function. Routes, stored in variables routeA and routeB, will subsequently be drawn by the drawRoutes() function. Graphics are handled by the p5 library.</li>
+            
+              <li>The first step to solving the map is to find the point furthest from the depot and add it to routeA, then the point furthest from that and add it to routeB.</li>
+            
+              <li>Thereafter, points are added pairwise. For each route, the unassigned point closest to each route is added, at the point that would add the least total distance to the array. This process proceeds until no more unassigned points are left. This tends to produce a reasonable route map, but often with regions in which both vehicles are doubled up. Each step of the process is documented in the routeHistory variables, for the sake of later visualization.</li>
+            
+              <li>The large neighborhood search method is then applied. For each point, all the points within a certain distance of that point are unassigned, simplifying the routes. The map is then healed, with each point being added to the route that adds the least total distance to the map. If this process produces a shorter route pair, the improvement is used, and new route is logged to route history variables.</li>
+            
+              <li>The results are logged to the console. An animation plays, detailing the process by which map was solved.</li>
+          </ol>
+        
+        <h3>ASSUMPTIONS, CONSIDERATIONS, AND LIMITATIONS</h3>
+        
+          <ul>
+                <li>This model completely fails to take real world routing/traffic conditions into account, and is therefore an idealization.</li>
+                <li>Much could be said about how to weight evenness of routes, driving time vs delivery time, load factors, and how to handle the distribution of long drives to Milwaukee vs. frequent stops around Chicago. In designing this heuristic, I assume we want a relatively even distribution in terms of number of stops.</li>
+                <li>To this end, the Chicago map is solved with a neighborhood radius of zero, meaning that rather than unassigning an entire region, only single points are unassigned. Otherwise, all of the close stops bunch up on one route. When running more randomly distributed maps, a larger radius is desirable. Therefore, when solving a random map, the radius is set to 50. Feel free to play around with this--the variable is called largeNeighborhoodSearchRadius. Note that larger radius values increase computational cost significantly on large maps.</li>
+          </ul>
+    </div>
+</body>

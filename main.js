@@ -22,6 +22,11 @@ let testDepot;
 
 var solveNotRun = true;
 
+/* 
+A search radius of 0 works well for the Chicago map, which has a number of stops close together and benefits from not cramming them all into one route. In more randomly spaced maps, a larger search radius will produce more useful results--try 10, 50, and 100.
+*/
+var largeNeighborhoodSearchRadius = 0;    
+
 function preload() {
   /*
   Loads CSV (note: must be running on a server for this to work).
@@ -34,6 +39,8 @@ function preload() {
   //csv = loadStrings('./testing/coordsTest.csv');
   //csv = loadStrings('./testing/coordsTest2.csv');
   csv = loadStrings('coords.csv');
+
+  console.log('Enter "solve()" to run, or "generateRandomMap(numberOfPoints)" to generate a different map.')
 }
 
 function setup() {
@@ -62,8 +69,7 @@ function solve() {
 
   assembleRoutes();
 
-  largeNeighborhoodSearch(0);
-  //largeNeighborhoodSearch(5);
+  largeNeighborhoodSearch(largeNeighborhoodSearchRadius);
 
   console.log('MAP SOLVED. Showing animation of steps...')
   logSolution();

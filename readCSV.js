@@ -36,6 +36,9 @@ function generateRandomMap(numberOfPoints) {
   /*
   Generates a random map with specified number of points.
   */
+  routeAHistory = [];
+  routeBHistory = [];
+  bestDistanceToDate = Infinity;
 
   // in a random map, a larger neighborhood radius will work better
   largeNeighborhoodSearchRadius = 50;

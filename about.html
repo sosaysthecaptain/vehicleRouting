@@ -86,12 +86,6 @@
                 <li>Much could be said about how to weight evenness of routes, driving time vs delivery time, load factors, and how to handle the distribution of long drives to Milwaukee vs. frequent stops around Chicago. In designing this heuristic, I assume we want a relatively even distribution in terms of number of stops.</li>
                 <li>To this end, the Chicago map is solved with a neighborhood radius of zero, meaning that rather than unassigning an entire region, only single points are unassigned. Otherwise, all of the close stops bunch up on one route. When running more randomly distributed maps, a larger radius is desirable. Therefore, when solving a random map, the radius is set to 50. Feel free to play around with this--the variable is called largeNeighborhoodSearchRadius. Note that larger radius values increase computational cost significantly on large maps.</li>
           </ul>
-
-        <h3>KNOWN ISSUES</h3>
-    
-        <ul>
-            <li>Occasionally the large neighborhood search will glitch on random maps, failing to return properly improved routes, and leaving several points unassigned. The problem seems to pertain to the drawRoutes() call within checkBestAndReassign().</li>
-        </ul>
             <!-- BODY HTML ENDS HERE -->
         </div>
     </div>
